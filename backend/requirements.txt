@@ -1,0 +1,3 @@
+# Collect latest version within major release
+Flask==2.*
+SQLAlchemy==2.*
