@@ -9,6 +9,16 @@ from abc import ABC, abstractmethod
 from backend.core.domain.models import Aluno
 
 
+class ProfessorRepository(ABC):
+    """Professor repository interface for domain layer. It defines the methods
+    for veryfing professor login credentials."""
+
+    @abstractmethod
+    def verify_login(self, email: str, password: str) -> bool:
+        """Verifies professor login credentials."""
+        pass
+
+
 class AlunoRepository(ABC):
     """Aluno repository interface for domain layer. It defines the methods
     for saving, retrieving, and deleting Aluno objects."""
