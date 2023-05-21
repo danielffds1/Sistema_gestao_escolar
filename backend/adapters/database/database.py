@@ -6,9 +6,9 @@ from sqlalchemy.ext.declarative import declarative_base
 
 
 # Create an engine to connect to a database
-# Replace <user>, <password>, <host>, <port>, and <database> with your own values
+# postgresql://<username>:<password>@<host>:<port>/<database_name>
 engine = create_engine(
-    'postgresql://<postgres>:<postgres>@<localhost>:<5450>/<postgres>',
+    'postgresql://postgres:postgres@localhost:5450/postgres',
     echo=True)
 
 
