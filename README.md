@@ -1,7 +1,7 @@
 # Sistema de Gestão Escolar
 
 ## Objetivo
-Criar um sistema de gestão escolar (customizado), para oferecer a um professor a opção de adicionar e remover alunos. Também permite a opção de cadastrar um professor.
+Criar um sistema de Gestão Escolar (customizado), para oferecer a um professor a opção de adicionar e remover alunos. Também permite a opção de cadastrar, editar e remover um professor.
 
 ## Principais features
 - Professor logar no sistema
@@ -18,3 +18,13 @@ Criar um sistema de gestão escolar (customizado), para oferecer a um professor 
 ### Frontend
 - Typescript
 - React
+
+### Arquitetura
+- Arquitetura Hexagonal
+
+# Membros
+- Daniel Felipe
+- Guilherme Aquim
+- Gustavo Ribeiro
+- Ivanir Paulo
+- Misael Saraiva
