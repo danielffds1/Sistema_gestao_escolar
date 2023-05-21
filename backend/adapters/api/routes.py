@@ -1,6 +1,7 @@
 from flask import Blueprint, request, jsonify
 import sys
-sys.path.append('../../../')
+sys.path.append('./')
+print("teste:", sys.path)
 from backend.adapters.controllers.controller import AlunoController, ProfessorController
 
 app = Blueprint('routes', __name__)
