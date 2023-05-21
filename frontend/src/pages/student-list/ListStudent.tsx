@@ -1,7 +1,7 @@
 import React from "react";
 import { Box } from '@mui/system';
 import { useNavigate } from "react-router-dom";
-import { Button, Divider, Icon, IconButton, InputAdornment, InputBase, Pagination, Paper, Table, TableBody, TableCell, TableContainer, TableFooter, TableHead, TableRow, TextField, Typography } from "@mui/material";
+import { IconButton, Pagination, Paper, Table, TableBody, TableCell, TableContainer, TableFooter, TableHead, TableRow, TextField, Typography } from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import SearchIcon from '@mui/icons-material/Search';
@@ -69,7 +69,7 @@ const ListStudent = () => {
             </TableHead>
     
             <TableBody>
-                <TableRow>
+                <TableRow data-testid="student-row">
                   <TableCell>
                     <IconButton size="small">
                       <DeleteIcon />
@@ -85,7 +85,7 @@ const ListStudent = () => {
             </TableBody>
 
             <TableBody>
-                <TableRow>
+                <TableRow data-testid="student-row">
                   <TableCell>
                     <IconButton size="small">
                       <DeleteIcon />
@@ -101,7 +101,7 @@ const ListStudent = () => {
             </TableBody>
 
             <TableBody>
-                <TableRow>
+                <TableRow data-testid="student-row">
                   <TableCell>
                     <IconButton size="small">
                       <DeleteIcon />
@@ -117,7 +117,7 @@ const ListStudent = () => {
             </TableBody>
 
             <TableBody>
-                <TableRow>
+                <TableRow data-testid="student-row">
                   <TableCell>
                     <IconButton size="small">
                       <DeleteIcon />
