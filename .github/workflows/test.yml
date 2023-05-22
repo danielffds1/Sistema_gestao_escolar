@@ -25,25 +25,9 @@ jobs:
         run: npm ci
 
       - name: Run tests
-        run: npm run test
+        run: npm run frontend/test
 
-    # Only run if changes are made in the frontend directory
-    steps:
-      - name: Check out repository
-        uses: actions/checkout@v2
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: ${{ matrix.node-version }}
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Run tests
-        run: npm run test
-
-    # Only run if changes are made in the frontend directory
-    paths:
-      - 'frontend/**'
-      - 'package.json'
+#     # Only run if changes are made in the frontend directory
+#     paths:
+#       - 'frontend/**'
+#       - 'package.json'
