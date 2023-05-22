@@ -28,11 +28,10 @@ jobs:
       - name: Change working directory to frontend
         run: cd frontend
 
-      - name: Print current working directory
-        run: pwd
-
       - name: Install dependencies
+        working-directory: ./frontend
         run: npm ci
 
       - name: Run tests
+        working-directory: ./frontend
         run: npm run test
