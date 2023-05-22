@@ -8,6 +8,11 @@ on:
     branches:
       - main
 
+  # Only run if changes are made in the frontend directory
+    paths:
+      - 'frontend/**'
+      - 'package.json'
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -21,13 +26,12 @@ jobs:
         with:
           node-version: '14'
 
+      - name: Enter frontend folder
+        run: |
+          cd my-folder
+        
       - name: Install dependencies
         run: npm ci
 
       - name: Run tests
-        run: npm run frontend/test
-
-#     # Only run if changes are made in the frontend directory
-#     paths:
-#       - 'frontend/**'
-#       - 'package.json'
+        run: npm run test
