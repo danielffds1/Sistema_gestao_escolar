@@ -27,7 +27,7 @@ jobs:
 
       - name: Enter frontend folder
         run: |
-          cd frontend/
+          cd ./frontend/
         
       - name: Install dependencies
         run: npm ci
