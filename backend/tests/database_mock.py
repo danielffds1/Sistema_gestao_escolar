@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from backend.core.interfaces.repositories import(
     ProfessorRepository, AlunoRepository
     )
@@ -6,7 +8,10 @@ from backend.core.domain.models import Aluno, Professor
 
 class AlunoRepositoryPostgresMock(AlunoRepository):
     def __init__(self):
-        self.database = [Aluno(1, 'Joao', '2001-01-01', 'Algum lugar', 'Maria', '3199999999', 'A')]
+        self.database = [
+            Aluno(1, 'Joao', datetime.strptime("2001-01-01", "%Y-%m-%d").date(), 'Algum lugar', 'Maria', '3199999999', 'morning'),
+            Aluno(2, 'Maria', datetime.strptime("2001-01-02", "%Y-%m-%d").date(), 'Lugar algum', 'Maria', '3199999998', 'morning'),
+            ]
 
     def save(self, aluno: Aluno) -> Aluno | str:
         """Saves an Aluno object to the database. If the save fails, an error
@@ -29,7 +34,7 @@ class AlunoRepositoryPostgresMock(AlunoRepository):
             if aluno.id == aluno_id:
                 return aluno
         return f"Aluno with ID {aluno_id} not found"
-        
+
 
     def delete(self, aluno_id: int) -> str:
         
@@ -49,6 +54,12 @@ class AlunoRepositoryPostgresMock(AlunoRepository):
 class ProfessorRepositoryPostgresMock(ProfessorRepository):
     def __init__(self):
         self.database = [Professor(1, 'Maria', 'maria@professora.com', '1234')]
+
+    def verify_login(self, email, password) -> bool:
+        for professor_database in self.database:
+            if email == professor_database.email and password == professor_database.password:
+                return True
+        return False
 
     def save(self, professor: Professor) -> Professor | str:
         """Saves an Professor object to the database. If the save fails, an error
@@ -72,6 +83,11 @@ class ProfessorRepositoryPostgresMock(ProfessorRepository):
                 return professor
         return f"Professor with ID {professor_id} not found"
 
+    def login(self, email, password):
+        for professor in self.database:
+            if professor.email == email and professor.password == password:
+                return True
+        return False
 
     def delete(self, professor_id: int) -> str:
         for professor_database in self.database:
