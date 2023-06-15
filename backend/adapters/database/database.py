@@ -18,7 +18,7 @@ class DatabaseSession:
     """
     def __init__(self):
         """Initializes the database engine and session."""
-        ips = ['172.18.0.2', '172.19.0.2']
+        ips = ['172.19.0.2', '172.18.0.2']
         for ip in ips:
             try:
                 # postgresql://<username>:<password>@<host>:<port>/<database_name>
