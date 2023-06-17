@@ -30,5 +30,6 @@ jobs:
         with:
           # token: ${{ secrets.CODECOV_TOKEN }}
           directory: ./backend/tests/
+          files: ./backend/tests/coverage.xml
           fail_ci_if_error: true
           verbose: true
