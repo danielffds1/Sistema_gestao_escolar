@@ -62,8 +62,8 @@ class TestAlunoService():
 
     def test_remove_aluno(self, setup):
         result = setup.remove_aluno(1)
-        assert result is None
-        # assert result == "Removed successfully"
+        # assert result is None
+        assert result == "Removed successfully"
 
     def test_update_aluno_name(self, setup):
         new_name = "Joao Henrique"
