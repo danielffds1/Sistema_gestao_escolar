@@ -22,14 +22,13 @@ jobs:
       - name: Run tests and collect coverage
         run: |
           coverage run -m pytest backend/tests/test_services.py
-          coverage xml -o ./backend/tests/coverage.xml
+          coverage xml -o /home/runner/work/Sistema_gestao_escolar/Sistema_gestao_escolar/backend/tests/coverage.xml
 
       # Upload coverage to Codecov
       - uses: actions/checkout@master
       - uses: codecov/codecov-action@v3
         with:
           # token: ${{ secrets.CODECOV_TOKEN }}
-          directory: ./backend/tests/
-          files: ./backend/tests/coverage.xml
+          directory: /home/runner/work/Sistema_gestao_escolar/Sistema_gestao_escolar/backend/tests/
           fail_ci_if_error: true
           verbose: true
