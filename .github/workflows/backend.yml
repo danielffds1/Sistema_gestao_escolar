@@ -22,7 +22,7 @@ jobs:
       - name: Run tests and collect coverage
         run: |
           coverage run -m pytest backend/tests/test_services.py
-          coverage xml -o ./backend/tests/coverage
+          coverage xml -o ./backend/tests/coverage.xml
 
       # Upload coverage to Codecov
       - uses: actions/checkout@master
