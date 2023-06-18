@@ -33,7 +33,7 @@ jobs:
       # Run integration tests
       - name: Run integration tests and collect coverage
         run: |
-          docker-compose run coverage run -m pytest backend/tests/test_controller.py
+          coverage run -m pytest backend/tests/test_controller.py
 
       # - name: Stop containers
       #   run: docker-compose down
