@@ -34,8 +34,8 @@ jobs:
       
       - name: Build Docker image
         run: | #docker build -t my-docker-image:latest -f caminho_do_Dockerfile .
-          docker-compose -f docker-compose.yml up -d db backend
-          sleep 15
+          docker-compose -f docker-compose.yml up --build -d db backend frontend
+          sleep 40
 
       - name: Run tests
         working-directory: ./frontend
