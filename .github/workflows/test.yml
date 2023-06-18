@@ -8,9 +8,9 @@ on:
     branches:
       - main
 
-  # Only run if changes are made in the frontend directory
-    paths:
-      - 'frontend/**'
+# Only run if changes are made in the frontend directory
+paths:
+  - 'frontend/**'
 
 jobs:
   build:
@@ -23,7 +23,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '18'
+          node-version: '14'
 
       - name: Change working directory to frontend
         run: cd frontend
@@ -32,11 +32,11 @@ jobs:
         working-directory: ./frontend
         run: npm ci
 
+      - name: Build Docker image
+        run: docker build -t my-docker-image:latest -f caminho_do_Dockerfile .
+      
       - name: Run tests
         working-directory: ./frontend
-        run: npm run test
-      
-      - name: Run tests sistema
-        working-directory: ./frontend
-        run: npx cypress run
-      
+        run: |
+          docker run -v $PWD:/app -w /app my-docker-image:latest npm run test
+          docker run -v $PWD:/app -w /app my-docker-image:latest npx cypress run
