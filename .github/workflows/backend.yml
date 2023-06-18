@@ -22,7 +22,7 @@ jobs:
       - name: Run tests and collect coverage
         run: |
           coverage run -m pytest backend/tests/test_services.py
-          coverage xml -o /home/runner/work/Sistema_gestao_escolar/Sistema_gestao_escolar/backend/tests/coverage.xml
+          coverage xml -o backend/tests/coverage.xml
 
       # Start containers
       # - name: Start backend and DB containers
@@ -43,7 +43,7 @@ jobs:
       - uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          directory: /home/runner/work/Sistema_gestao_escolar/Sistema_gestao_escolar/backend/tests/
-          files: /home/runner/work/Sistema_gestao_escolar/Sistema_gestao_escolar/backend/tests/coverage.xml
+          # directory: /home/runner/work/Sistema_gestao_escolar/Sistema_gestao_escolar/backend/tests/
+          # files: /home/runner/work/Sistema_gestao_escolar/Sistema_gestao_escolar/backend/tests/coverage.xml
           fail_ci_if_error: false
           verbose: true
