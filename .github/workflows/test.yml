@@ -9,8 +9,8 @@ on:
       - main
 
 # Only run if changes are made in the frontend directory
-    paths:
-      - 'frontend/**'
+paths:
+  - 'frontend/**'
 
 jobs:
   build:
