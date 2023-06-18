@@ -40,5 +40,5 @@ jobs:
       - name: Run tests
         working-directory: ./frontend
         run: |
-          docker run -v $PWD:/app -w /app my-docker-image:latest npm run test
-          docker run -v $PWD:/app -w /app my-docker-image:latest npx cypress run
+          npm run test
+          npx cypress run
