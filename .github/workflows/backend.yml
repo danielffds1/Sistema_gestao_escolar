@@ -24,6 +24,17 @@ jobs:
           coverage run -m pytest backend/tests/test_services.py
           coverage xml -o /home/runner/work/Sistema_gestao_escolar/Sistema_gestao_escolar/backend/tests/coverage.xml
 
+      # Start containers
+      - name: Start backend and DB containers
+        run: |
+          docker-compose -f docker-compose.yml up -d backend db
+          sleep 15
+
+      # Run integration tests
+      - name: Run tests and collect coverage
+        run: |
+          coverage run -m pytest backend/tests/test_controller.py
+
       # Upload coverage to Codecov
       - uses: actions/checkout@master
       - uses: codecov/codecov-action@v3
