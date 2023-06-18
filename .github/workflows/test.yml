@@ -9,8 +9,8 @@ on:
       - main
 
 # Only run if changes are made in the frontend directory
-paths:
-  - 'frontend/**'
+    paths:
+      - 'frontend/**'
 
 jobs:
   build:
@@ -33,7 +33,9 @@ jobs:
         run: npm ci
 
       - name: Build Docker image
-        run: docker build -t my-docker-image:latest -f caminho_do_Dockerfile .
+        run: | #docker build -t my-docker-image:latest -f caminho_do_Dockerfile .
+          docker-compose -f docker-compose.yml up -d db backend
+          sleep 15
       
       - name: Run tests
         working-directory: ./frontend
