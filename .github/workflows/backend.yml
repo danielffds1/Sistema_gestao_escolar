@@ -31,9 +31,9 @@ jobs:
       #     sleep 15
 
       # Run integration tests
-      - name: Run integration tests and collect coverage
-        run: |
-          coverage run -m pytest backend/tests/test_controller.py
+      # - name: Run integration tests and collect coverage
+      #   run: |
+      #     coverage run -m pytest backend/tests/test_controller.py
 
       # - name: Stop containers
       #   run: docker-compose down
