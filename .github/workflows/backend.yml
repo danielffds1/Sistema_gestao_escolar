@@ -27,13 +27,16 @@ jobs:
       # Start containers
       - name: Start backend and DB containers
         run: |
-          docker-compose -f docker-compose.yml up -d backend db
+          docker-compose -f docker-compose.yml up -d db backend
           sleep 15
 
       # Run integration tests
-      - name: Run tests and collect coverage
+      - name: Run integration tests and collect coverage
         run: |
-          coverage run -m pytest backend/tests/test_controller.py
+          docker-compose run coverage run -m pytest backend/tests/test_controller.py
+
+      - name: Stop containers
+        run: docker-compose down
 
       # Upload coverage to Codecov
       - uses: actions/checkout@master
