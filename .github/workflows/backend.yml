@@ -23,10 +23,11 @@ jobs:
       #  run: |
       #    coverage run -m pytest backend/tests/test_services.py
       #    coverage xml -o backend/tests/unit_tests_coverage.xml
-      - name: Run test and collect coverage
+      - name: Generate coverage report
         run: |
-          pytest -k teste_service.py --cov=. --cov-report xml:coverage.xml
-      
+          pip install pytest
+          pip install pytest-cov
+          pytest -k test_service.py --cov=./ --cov-report=xml
       # Start containers
       - name: Start backend and DB containers
         run: |
