@@ -22,7 +22,7 @@ jobs:
       - name: Run tests and collect coverage
         run: |
           coverage run -m /pytest backend/tests/test_services.py
-          coverage xml -o ../../coverage.xml
+          coverage xml -o /backend/tests/unit_tests_coverage.xml
 
       # Start containers
       - name: Start backend and DB containers
@@ -44,7 +44,7 @@ jobs:
       - uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          directory: ../../
-          files: coverage.xml
+          directory: backend/tests/
+          files: backend/tests/unit_tests_coverage.xml
           fail_ci_if_error: false
           verbose: true
