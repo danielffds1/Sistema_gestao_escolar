@@ -27,7 +27,7 @@ jobs:
         run: |
           pip install pytest
           pip install pytest-cov
-          pytest -k test_service.py --cov=./ --cov-report=xml
+          pytest -k backend/tests/test_services.py --cov=./ --cov-report=xml
       # Start containers
       - name: Start backend and DB containers
         run: |
