@@ -22,7 +22,7 @@ jobs:
       - name: Run tests and collect coverage
         run: |
           coverage run -m pytest backend/tests/test_services.py
-          coverage xml -o backend/tests/unit_tests_coverage.xml
+          coverage xml
       #- name: Generate coverage report
       #  run: |
       #    pip install pytest
