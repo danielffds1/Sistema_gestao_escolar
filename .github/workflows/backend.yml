@@ -29,6 +29,8 @@ jobs:
         run: |
           docker-compose -f docker-compose.yml up --build -d db backend
           sleep 30
+          db_ip=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' ci_db_1)
+          echo "DB IP address: $db_ip"
 
       # Run integration tests
       - name: Run integration tests and collect coverage
