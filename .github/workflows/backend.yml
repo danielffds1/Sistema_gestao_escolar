@@ -19,11 +19,14 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r backend/requirements.txt
 
-#      - name: Run tests and collect coverage
-#        run: |
-#          coverage run -m pytest backend/tests/test_services.py
-#          coverage xml -o backend/tests/unit_tests_coverage.xml
-       
+      #- name: Run tests and collect coverage
+      #  run: |
+      #    coverage run -m pytest backend/tests/test_services.py
+      #    coverage xml -o backend/tests/unit_tests_coverage.xml
+      - name: Run test and collect coverage
+        run: |
+          pytest -k teste_service.py --cov=. --cov-report xml:coverage.xml
+      
       # Start containers
       - name: Start backend and DB containers
         run: |
@@ -34,28 +37,17 @@ jobs:
       #- name: Run integration tests and collect coverage
       #  run: |
       #    coverage run -m pytest backend/tests/test_controller.py
-      #    coverage xml -o backend/tests/integrarion_tests_coverage.xml
+      #_    coverage xml -o backend/tests/integrarion_tests_coverage.xml
 
       - name: Stop containers
         run: docker-compose down
 
       # Upload coverage to Codecov
-#      - uses: actions/checkout@master
-#      - uses: codecov/codecov-action@v3
-#        with:
-#          token: ${{ secrets.CODECOV_TOKEN }}
-#          # directory: /home/runner/work/Sistema_gestao_escolar/Sistema_gestao_escolar/backend/tests/
-#          # files: /home/runner/work/Sistema_gestao_escolar/Sistema_gestao_escolar/backend/tests/coverage.xml
-#          fail_ci_if_error: false
-#          verbose: true
-      - name: Generate coverage report
-        run: |
-          pip install pytest
-          pip install pytest-cov
-          pytest --cov=./ --cov-report=xml
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
+      - uses: actions/checkout@master
+      - uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          directory: ./coverage/reports/
-          env_vars: OS,PYTHON
+          # directory: /home/runner/work/Sistema_gestao_escolar/Sistema_gestao_escolar/backend/tests/
+          # files: /home/runner/work/Sistema_gestao_escolar/Sistema_gestao_escolar/backend/tests/coverage.xml
+          fail_ci_if_error: false
+          verbose: true
