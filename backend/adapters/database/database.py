@@ -262,59 +262,16 @@ def create_some_alunos(engine: Engine):
 
     aluno_list = [
         {'name': 'Pedro Souza', 'born_date': '2000-01-01',
-        'address': 'Rua Principal, 123', 'tutor_name': 'Ana Souza',
-        'tutor_phone': '(11) 5555-5555', 'class_shift': 'Manhã'},
-        {'name': 'Ana Paula Souza', 'born_date': '2001-02-02',
-        'address': 'Rua das Flores, 456', 'tutor_name': 'Pedro Souza',
-        'tutor_phone': '(11) 5555-5555', 'class_shift': 'Tarde'},
-        {'name': 'Lucas Oliveira', 'born_date': '2002-03-03',
-        'address': 'Rua dos Pinheiros, 789', 'tutor_name': 'Alice Santos',
-        'tutor_phone': '(11) 5555-5555', 'class_shift': 'Manhã'},
-        {'name': 'Mariana Santos', 'born_date': '2003-04-04',
-        'address': 'Rua das Palmeiras, 321', 'tutor_name': 'Miguel Oliveira',
-        'tutor_phone': '(11) 5555-5555', 'class_shift': 'Tarde'},
-        {'name': 'Gustavo Lima', 'born_date': '2004-05-05',
-        'address': 'Rua das Acácias, 678', 'tutor_name': 'Juliana Lima',
-        'tutor_phone': '(11) 5555-5555', 'class_shift': 'Manhã'},
-        {'name': 'Juliana Lima', 'born_date': '2005-06-06',
-        'address': 'Rua das Orquídeas, 901', 'tutor_name': 'Gustavo Lima',
-        'tutor_phone': '(11) 5555-5555', 'class_shift': 'Tarde'},
-        {'name': 'Rafaela Costa', 'born_date': '2006-07-07',
-        'address': 'Rua das Margaridas, 234', 'tutor_name': 'Fernando Costa',
-        'tutor_phone': '(11) 5555-5555', 'class_shift': 'Manhã'},
-        {'name': 'Fernando Costa', 'born_date': '2007-08-08',
-        'address': 'Rua das Violetas, 567', 'tutor_name': 'Rafaela Costa',
-        'tutor_phone': '(11) 5555-5555', 'class_shift': 'Tarde'},
-        {'name': 'Larissa Santos', 'born_date': '2008-09-09',
-        'address': 'Rua das Begônias, 890', 'tutor_name': 'Rodrigo Santos',
-        'tutor_phone': '(11) 5555-5555', 'class_shift': 'Manhã'},
-        {'name': 'Rodrigo Santos', 'born_date': '2009-10-10',
-        'address': 'Rua das Azaleias, 123', 'tutor_name': 'Larissa Santos',
-        'tutor_phone': '(11) 5555-5555', 'class_shift': 'Tarde'},
-        {'name': 'Isabela Oliveira', 'born_date': '2010-11-11',
-        'address': 'Rua das Hortênsias, 456', 'tutor_name': 'Thiago Oliveira',
-        'tutor_phone': '(11) 5555-5555', 'class_shift': 'Manhã'},
-        {'name': 'Thiago Oliveira', 'born_date': '2011-12-12',
-        'address': 'Rua das Camélias, 789', 'tutor_name': 'Isabela Oliveira',
-        'tutor_phone': '(11) 5555-5555', 'class_shift': 'Tarde'},
-        {'name': 'Gabriel Silva', 'born_date': '2012-01-13',
-        'address': 'Rua das Tulipas, 246', 'tutor_name': 'Carla Silva',
-        'tutor_phone': '(11) 5555-5555', 'class_shift': 'Manhã'},
-        {'name': 'Carla Silva', 'born_date': '2013-02-14',
-        'address': 'Rua das Margaridas, 802', 'tutor_name': 'Gabriel Silva',
-        'tutor_phone': '(11) 5555-5555', 'class_shift': 'Tarde'},
-        {'name': 'Luciana Santos', 'born_date': '2014-03-15',
-        'address': 'Rua das Orquídeas, 246', 'tutor_name': 'Ricardo Santos',
-        'tutor_phone': '(11) 5555-5555', 'class_shift': 'Manhã'},
-        {'name': 'Ricardo Santos', 'born_date': '2015-04-16',
-        'address': 'Rua das Violetas, 802', 'tutor_name': 'Luciana Santos',
-        'tutor_phone': '(11) 5555-5555', 'class_shift': 'Tarde'}
+         'class_shift': 'Manhã'},
+        {'name': 'Maria Silva', 'born_date': '2000-01-02',
+         'class_shift': 'Manhã'},
+        {'name': 'João Santos', 'born_date': '2000-01-03',
+         'class_shift': 'Manhã'},
     ]
 
     for aluno in aluno_list:
         new_aluno = AlunoORM(name=aluno['name'], born_date=aluno['born_date'],
-                             address=aluno['address'], tutor_name=aluno['tutor_name'],
-                             tutor_phone=aluno['tutor_phone'], class_shift=aluno['class_shift'])
+                             class_shift=aluno['class_shift'])
 
         existing_aluno = session.query(AlunoORM).filter_by(name=new_aluno.name,
                                                            born_date=new_aluno.born_date).first()
@@ -324,6 +281,76 @@ def create_some_alunos(engine: Engine):
         # Insert a new student
         session.add(new_aluno)
         session.commit()
+
+def create_some_responsaveis(engine: Engine):
+    """Creates some ResponsavelPorAluno objects and saves them to the database."""
+    session_maker = sessionmaker(bind=engine)
+    session = session_maker()
+
+    responsavel_list = [
+        {'name': 'Ana Souza', 'kinship': 'Mãe', 'identity': '123456',
+         'cpf': '12345678901', 'born_date': '1980-01-01',
+         'civil_status': 'Casada', 'street_name': 'Rua Dona Flor',
+         'street_number': '123', 'neighborhood': 'Bairro Abril',
+         'housing_additional_info': 'Casa', 'cep': '32345678',
+         'phone': '31995678901', 'landline': '3134567890',
+         'email': 'ana@email.com.br', 'observation': ''},
+        {'name': 'José Silva', 'kinship': 'Pai', 'identity': '123457',
+         'cpf': '12345678902', 'born_date': '1980-01-02',
+         'civil_status': 'Casado', 'street_name': 'Rua Dona Flor',
+         'street_number': '124', 'neighborhood': 'Bairro Bonsucesso',
+         'housing_additional_info': 'Casa', 'cep': '32345679',
+         'phone': '31995678902', 'landline': '3134567891',
+         'email': 'jose@email.com.br', 'observation': ''},
+    ]
+
+    for responsavel in responsavel_list:
+        new_responsavel = ResponsavelPorAlunoORM(name=responsavel['name'],
+                                                 kinship=responsavel['kinship'],
+                                                 identity=responsavel['identity'],
+                                                 cpf=responsavel['cpf'],
+                                                 born_date=responsavel['born_date'],
+                                                 civil_status=responsavel['civil_status'],
+                                                 street_name=responsavel['street_name'],
+                                                 street_number=responsavel['street_number'],
+                                                 neighborhood=responsavel['neighborhood'],
+                                                 housing_additional_info=responsavel['housing_additional_info'],
+                                                 cep=responsavel['cep'],
+                                                 phone=responsavel['phone'],
+                                                 landline=responsavel['landline'],
+                                                 email=responsavel['email'],
+                                                 observation=responsavel['observation'])
+
+        existing_responsavel = session.query(ResponsavelPorAlunoORM).filter_by(cpf=new_responsavel.cpf).first()
+        if existing_responsavel:
+            continue
+
+        # Insert a new responsible
+        session.add(new_responsavel)
+        session.commit()
+    
+    # Retrieve Maria Silva and her parents
+    maria = session.query(AlunoORM).filter_by(name='Maria Silva').first()
+    ana = session.query(ResponsavelPorAlunoORM).filter_by(name='Ana Souza').first()
+    jose = session.query(ResponsavelPorAlunoORM).filter_by(name='José Silva').first()
+
+    # Associate Maria with her parents
+    if maria and ana and jose:
+        maria.responsaveis.append(ana)
+        maria.responsaveis.append(jose)
+        session.commit()
+
+
+def delete_all_responsaveis(engine: Engine):
+    """Deletes all ResponsavelPorAluno objects from the database."""
+    session_maker = sessionmaker(bind=engine)
+    session = session_maker()
+
+    # TODO: Does it delete the relationship between Aluno and ResponsavelPorAluno?
+    #       and alunos too?
+    # Delete all responsaveis
+    session.query(ResponsavelPorAlunoORM).delete()
+    session.commit()
 
 
 def create_some_professor(engine: Engine):

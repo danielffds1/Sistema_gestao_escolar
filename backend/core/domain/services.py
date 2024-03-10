@@ -4,7 +4,10 @@
   tal como DB ou ORM
 """
 
-from backend.core.domain.models import Aluno, Professor, PeriodoLetivo, DiaSemAula
+from backend.core.domain.models import (
+    Aluno, ResponsavelPorAluno, Professor, PeriodoLetivo, DiaSemAula
+)
+
 from backend.core.interfaces.repositories import (
     AlunoRepository, PeriodoLetivoRepository, DiaSemAulaRepository
 )
@@ -167,8 +170,10 @@ class AlunoService:
 
         # get all alunos and change it to a dictionary of alunos
         alunos_dict = {'Aluno': []}
-        for aluno in alunos:
-            alunos_dict['Aluno'].append(aluno.__dict__)
+        for aluno, responsaveis in alunos:
+            aluno_dict = aluno.__dict__
+            aluno_dict['Responsaveis'] = [responsavel.__dict__ for responsavel in responsaveis]
+            alunos_dict['Aluno'].append(aluno_dict)
 
         return alunos_dict
 

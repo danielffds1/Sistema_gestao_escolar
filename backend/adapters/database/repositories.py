@@ -5,20 +5,21 @@
 - Aqui, pode ser usado qualquer tecnologia
 """
 
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, joinedload
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy import column
 
 from backend.core.domain.models import (
-    Professor, Aluno, PeriodoLetivo, DiaSemAula
+    Aluno, ResponsavelPorAluno, Professor, PeriodoLetivo, DiaSemAula
 )
 from backend.core.interfaces.repositories import(
-    ProfessorRepository, AlunoRepository, PeriodoLetivoRepository,
-    DiaSemAulaRepository
+    AlunoRepository, ResponsavelPorAlunoRepository, ProfessorRepository,
+    PeriodoLetivoRepository, DiaSemAulaRepository
 )
 
 from backend.adapters.database.database import (
-    ProfessorORM, AlunoORM, PeriodoLetivoORM, DiaSemAulaORM
+    AlunoORM, ResponsavelPorAlunoORM, ProfessorORM,
+    PeriodoLetivoORM, DiaSemAulaORM
 )
 
 class ProfessorRepositoryPostgres(ProfessorRepository):
@@ -197,17 +198,23 @@ class AlunoRepositoryPostgres(AlunoRepository):
         return alunos
 
 
-    def get_all_alunos(self) -> list[Aluno]:
-        """Retrieves all Aluno objects from the database. If the retrieval
-        fails, an empty list is returned.\\
+    def get_all_alunos(self) -> list[tuple[Aluno, list[ResponsavelPorAluno]]]:
+        """Retrieves all Aluno objects and their respective ResponsavelPorAluno
+        objects from the database. If the retrieval fails, an empty list
+        is returned.\\
         Returns:
-            list[Aluno]: List of Aluno objects.
+            list[tuple]: List of tuples, where each tuple contains
+                an Aluno object and a list of its ResponsavelPorAluno objects.
         """
-        alunos_orm = self.database.query(AlunoORM).all()
-        alunos = [AlunoORM.to_aluno(aluno) for aluno in alunos_orm]
-        if alunos is None:
-            return []
-        return alunos
+        alunos_orm = self.database.query(AlunoORM).options(joinedload(AlunoORM.responsaveis)).all()
+        alunos_with_responsaveis = []
+        for aluno in alunos_orm:
+            responsaveis = [
+                ResponsavelPorAlunoORM.to_responsavel(responsavel) for responsavel in aluno.responsaveis
+            ]
+            alunos_with_responsaveis.append((AlunoORM.to_aluno(aluno),
+                                             responsaveis))
+        return alunos_with_responsaveis
 
 
     def get_alunos_paginated(self, offset, limit, name_like) -> list[Aluno]:
