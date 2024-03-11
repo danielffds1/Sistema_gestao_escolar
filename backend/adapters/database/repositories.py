@@ -184,18 +184,24 @@ class AlunoRepositoryPostgres(AlunoRepository):
         return "Removed successfully"
 
 
-    def get_by_name(self, aluno_name: str) -> list[Aluno]:
-        """Retrieves one or more Aluno object from the database by its name.\\
+    def get_by_name(self, aluno_name: str) -> list[tuple[Aluno, list[ResponsavelPorAluno]]]:
+        """Retrieves one or more Aluno objects and their respective ResponsavelPorAluno
+        objects from the database by the Aluno's name.\\
         Args:
             aluno_name (str): Aluno name.
         Returns:
-            list[Aluno]: List of Aluno objects.
+            list[tuple]: List of tuples, where each tuple contains
+                an Aluno object and a list of its ResponsavelPorAluno objects.
         """
-        alunos = self.database.query(AlunoORM).filter(column('name') == aluno_name).all()
-        alunos = [AlunoORM.to_aluno(aluno) for aluno in alunos]
-        if alunos is None:
-            return []
-        return alunos
+        alunos_orm = self.database.query(AlunoORM).filter(AlunoORM.name == aluno_name).options(joinedload(AlunoORM.responsaveis)).all()
+        alunos_with_responsaveis = []
+        for aluno in alunos_orm:
+            responsaveis = [
+                ResponsavelPorAlunoORM.to_responsavel(responsavel) for responsavel in aluno.responsaveis
+            ]
+            alunos_with_responsaveis.append((AlunoORM.to_aluno(aluno),
+                                             responsaveis))
+        return alunos_with_responsaveis
 
 
     def get_all_alunos(self) -> list[tuple[Aluno, list[ResponsavelPorAluno]]]:
@@ -217,21 +223,29 @@ class AlunoRepositoryPostgres(AlunoRepository):
         return alunos_with_responsaveis
 
 
-    def get_alunos_paginated(self, offset, limit, name_like) -> list[Aluno]:
-        """Retrieves all Aluno objects from the database. If the retrieval
-        fails, an empty list is returned.\\
+    def get_alunos_paginated(self, offset, limit, name_like) -> list[tuple[Aluno, list[ResponsavelPorAluno]]]:
+        """Retrieves all Aluno objects and their respective ResponsavelPorAluno
+        objects from the database. If the retrieval fails, an empty list
+        is returned.\\
         Returns:
-            list[Aluno]: List of Aluno objects.
+            list[tuple]: List of tuples, where each tuple contains
+                an Aluno object and a list of its ResponsavelPorAluno objects.
         """
         alunos_orm = self.database.query(
                          AlunoORM).filter(
                          AlunoORM.name.like(f'%{name_like}%')
-                         ).offset(offset).limit(limit).all()
+                         ).options(joinedload(AlunoORM.responsaveis)).offset(offset).limit(limit).all()
 
-        alunos = [AlunoORM.to_aluno(aluno) for aluno in alunos_orm]
-        if alunos is None:
-            return []
-        return alunos
+        alunos_with_responsaveis = []
+        for aluno in alunos_orm:
+            responsaveis = [
+                ResponsavelPorAlunoORM.to_responsavel(responsavel) for responsavel in aluno.responsaveis
+            ]
+            alunos_with_responsaveis.append((AlunoORM.to_aluno(aluno),
+                                             responsaveis))
+        return alunos_with_responsaveis
+
+
 
 
 class PeriodoLetivoRepositoryPostgres(PeriodoLetivoRepository):

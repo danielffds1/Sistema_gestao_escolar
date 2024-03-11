@@ -154,8 +154,10 @@ class AlunoService:
 
         # get all alunos and change it to a dictionary of alunos
         alunos_dict = {'Aluno': []} # {'Aluno': [{'id': 1, name: 'joao',...}, aluno2, ...]}
-        for aluno in alunos:
-            alunos_dict['Aluno'].append(aluno.__dict__)
+        for aluno, responsaveis in alunos:
+            aluno_dict = aluno.__dict__
+            aluno_dict['Responsaveis'] = [responsavel.__dict__ for responsavel in responsaveis]
+            alunos_dict['Aluno'].append(aluno_dict)
 
         return alunos_dict
 
@@ -193,9 +195,10 @@ class AlunoService:
 
         # get all alunos and change it to a dictionary of alunos
         alunos_dict = {'Aluno': []}
-        if alunos is not None:
-            for aluno in alunos:
-                alunos_dict['Aluno'].append(aluno.__dict__)
+        for aluno, responsaveis in alunos:
+            aluno_dict = aluno.__dict__
+            aluno_dict['Responsaveis'] = [responsavel.__dict__ for responsavel in responsaveis]
+            alunos_dict['Aluno'].append(aluno_dict)
 
         return alunos_dict
 
